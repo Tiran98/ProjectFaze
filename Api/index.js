@@ -1,27 +1,22 @@
 const express = require('express');
-
 const path = require('path');
+const bodyParser = require('body-parser');
 
+const database = require('../Api/Models/db');
 const app = express();
 
-const members = [
-    {
-        id: 1,
-        name: 'Tiran',
-        email: 'hettiarchchi1998@gmail.com'
-    },
-    {
-        id: 2,
-        name: 'Vinuri',
-        email: 'vinuriG@gmail.com'
+database.connect(function(err) {
+    if (err) {
+        return console.error('error: ' + err.message);
     }
-];
+    
 
-app.get('/api/members', (req, res) => {
-    res.json(members);
-});
+    console.log('Connected to the MySQL server.');
+})
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 
 const PORT = process.env.PORT || 5000;
 

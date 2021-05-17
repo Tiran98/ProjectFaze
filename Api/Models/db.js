@@ -9,14 +9,6 @@ const connection = mysql.createConnection({
   database : dbConfig.DB
 })
 
-connection.connect(function(err) {
-    if (err) {
-        return console.error('error: ' + err.message);
-    }
-
-    console.log('Connected to the MySQL server.');
-})
-
 // connection.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
 //   if (err) throw err
 
@@ -24,5 +16,3 @@ connection.connect(function(err) {
 // })
 
 module.exports = connection;
-
-connection.end()

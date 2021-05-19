@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 require("./Routes/buyer.routes.js")(app);
 require("./Routes/seller.routes.js")(app);
+require("./Routes/item.routes.js")(app);
 
 const PORT = process.env.PORT || 5000;
 

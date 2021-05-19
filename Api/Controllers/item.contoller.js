@@ -1,6 +1,6 @@
-const Buyer = require("../Models/buyer.model.js");
+const Item = require("../Models/item.model.js");
 
-// Create and Save a new Customer
+// Create and Save a new Item
 exports.create = (req, res) => {
     //Validate request
     if(!req.body) {
@@ -8,62 +8,61 @@ exports.create = (req, res) => {
             message: "content can not be empty!"
         });
     }
-    //create buyer
-    const buyer = new Buyer({
-        username: req.body.username,
-        email:req.body.email,
-        password:req.body.password,
-        age:req.body.age,
-        country:req.body.country,
-        address:req.body.address,
-        usertype:req.body.usertype,
-        mobile_number:req.body.mobile_number        
+    //create item
+    const item = new Item({
+        seller_id: req.body.seller_id,
+        item_name:req.body.item_name,
+        item_stock:req.body.item_stock,
+        item_category:req.body.item_category,
+        unit_price:req.body.unit_price,
+        item_description:req.body.item_description,
+        item_image:req.body.item_image,  
     });
-    //save buyer in database
-    Buyer.create(buyer, (err, data) => {
+    //save Item in database
+    Item.create(item, (err, data) => {
         if(err){
             console.log(err);
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the Buyer"
+                    err.message || "Some error occurred while creating the Item"
             });
         }
         else res.send(data);
     });  
 };
 
-// Retrieve all Customers from the database.
+// Retrieve all Items from the database.
 exports.findAll = (req, res) => {
-    Buyer.getAll((err, data) => {
+    Item.getAll((err, data) => {
         if(err){
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving customers."
+                    err.message || "Some error occurred while retrieving Items."
             }); 
         }
         else res.send(data);
     });
 };
 
-// Find a single Buyer with a BuyerId
+// Find a single item with a Item_id
 exports.findOne = (req, res) => {
-    Buyer.findById(req.params.buyerId, (err, data) => {
+    Item.findById(req.params.itemId, (err, data) => {
         if (err) {
             if(err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Buyer with id ${req.params.buyerId}.`
+                    message: `Not found Item with id ${req.params.itemId}.`
                 });   
             }
             else{
                 res.status(500).send({
-                    message: "Error retrieving Buyer with id " + req.params.buyerId
+                    message: "Error retrieving item with id " + req.params.itemId
                 });
             }
         }else res.send(data);
     });
 };
 
-// Update a Buyer identified by the BuyerId in the request
+// Update a Item identified by the Item_id in the request
 exports.update = (req, res) => {
     //Validate Request
     if(!req.body) {
@@ -72,18 +71,18 @@ exports.update = (req, res) => {
         });
     }
 
-    Buyer.updatedById(
-        req.params.buyerId,
-        new Buyer(req.body),
+    Item.updatedById(
+        req.params.itemId,
+        new Item(req.body),
         (err, data) => {
             if(err) {
                 if (err.kind == "not_found") {
                     res.status(404).send({
-                        message:`Not found Buyer with id ${req.params.buyerId}.`
+                        message:`Not found Item with id ${req.params.itemId}.`
                     });
                 } else {
                     res.status(500).send({
-                        message: "Error updating Buyer with id " + req.params.buyerId
+                        message: "Error updating Item with id " + req.params.itemId
                     });
                 }
             } else res.send(data);
@@ -91,32 +90,32 @@ exports.update = (req, res) => {
     );
 };
 
-// Delete a Buyer with the specified BuyerId in the request
+// Delete a Item with the specified ItemId in the request
 exports.delete = (req, res) => {
-    Buyer.remove(req.params.buyerId, (err, data) => {
+    Item.remove(req.params.itemId, (err, data) => {
         if(err) {
             if(err.kind == "not_found") {
                 res.status(404).send({
-                    message:`Not found Buyer with id ${req.params.buyerId}.`
+                    message:`Not found Item with id ${req.params.itemId}.`
                 });
             }else {
                 res.status(500).send({
-                    message: "Could not delete Buyer with id " + req.params.buyerId
+                    message: "Could not delete Item with id " + req.params.itemId
                 });
             }
-        }else res.send({ message: `Buyer was deleted Successfully!`});
+        }else res.send({ message: `Item was deleted Successfully!`});
     });
 };
 
-// Delete all Buyers from the database.
+// Delete all Items from the database.
 exports.deleteAll = (req, res) => {
-    Buyer.removeAll((err, data) => {
+    Item.removeAll((err, data) => {
         if (err){
             res.status(500).send({
                 message:
                     err.message || "Some error occured while removing all."
             });
         }
-        else res.send({message: `All Buyer were deleted successfully`});
+        else res.send({message: `All Items were deleted successfully`});
     });
 };

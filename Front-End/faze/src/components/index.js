@@ -6,3 +6,5 @@ export { default as Cart }
 from './Cart/Cart';
 export { default as Checkout }
 from './CheckoutForm/Checkout/Checkout';
+export { default as UserAuth }
+from './UserAuth/UserAuth';

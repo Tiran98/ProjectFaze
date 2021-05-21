@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 
+var dbConfig = require("./config/db.config.js")
+const client = require("twilio")(dbConfig.accountSID,dbConfig.authToken)
+
 const database = require('../Api/Models/db');
 
 const app = express();
@@ -19,6 +22,38 @@ app.use(bodyParser.urlencoded({extended: true}));
 require("./Routes/buyer.routes.js")(app);
 require("./Routes/seller.routes.js")(app);
 require("./Routes/item.routes.js")(app);
+require("./Routes/cartItems.routes")(app);
+require("./Routes/orderHistory.routes.js")(app);
+
+//OTP Functions
+app.get('/sendOTP', (req, res) => {
+    client
+        .verify
+        .services(dbConfig.serviceID)
+        .verifications
+        .create({
+            //from: '+94712427978',
+            to: `+${req.query.phonenumber}`,
+            channel: req.query.channel
+        })
+        .then((data) => {
+            res.status(200).send(data)
+        })
+});
+
+app.get('/verifyOTP', (req, res) => {
+    client
+        .verify
+        .services(dbConfig.serviceID)
+        .verificationChecks
+        .create({
+            to: `+${req.query.phonenumber}`,
+            code: req.query.code
+        })
+        .then((data) => {
+            res.status(200).send(data)
+        })
+});
 
 const PORT = process.env.PORT || 5000;
 

@@ -28,8 +28,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 
               setCheckoutToken(token);
             } catch (error) {
-                console.log(error);
-                history.pushState('/');
+                if (activeStep !== steps.length) history.push('/');
             }
           };
     
@@ -39,7 +38,6 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     
 
     const test = (data) => {
-        console.log(data);
         setShippingData(data);
 
         nextStep();
@@ -51,7 +49,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
         }, 3000);
     }
 
-    //console.log(shippingData);
+    console.log(isFinished);
 
     let Confirmation = () => order.customer ? (
         <>  

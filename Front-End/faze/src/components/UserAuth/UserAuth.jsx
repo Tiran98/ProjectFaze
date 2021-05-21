@@ -13,9 +13,12 @@ import Container from '@material-ui/core/Container';
 import useStyles from './styles';
 import Input from './Input';
 import { signin, signup } from '../../actions/auth';
+import { Formik, Form, Field } from 'formik';
+import * as EmailValidator from "email-validator"; // used when validating with a self-implemented approach
+import * as Yup from "yup"; // used when validating with a pre-built solution
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
-
+  
 const UserAuth = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -61,7 +64,12 @@ const UserAuth = () => {
                 <Grid container spacing={2}>
                     { isSignup && (
                     <>
-                        <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
+                        <Input
+                            name="firstName"
+                            label="First Name"
+                            handleChange={handleChange} 
+                            half           
+                        />
                         <Input name="lastName" label="Last Name" handleChange={handleChange} half />
                     </>
                     )}
@@ -84,7 +92,6 @@ const UserAuth = () => {
             </Container>
            
         </div>
-    )
+    );
 }
-
 export default UserAuth;

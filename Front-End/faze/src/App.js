@@ -3,7 +3,7 @@ import { commerce } from './lib/commerce';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
-import { Products, Navbar, Cart, Checkout, UserAuth } from './components';
+import { Products, Navbar, Cart, Checkout, UserAuth, Home } from './components';
 
 const App = () => {
     const [products, setProducts] = useState([]);
@@ -100,6 +100,9 @@ const App = () => {
                 <Switch>
                     <Route exact path="/">
                         <Products products={products} onAddToCart={handleAddToCart} />
+                    </Route>
+                    <Route exact path="/home">
+                        <Home products={products} onAddToCart={handleAddToCart} />
                     </Route>
                     <Route exact path="/user-auth">
                         <UserAuth />

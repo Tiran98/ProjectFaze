@@ -11,6 +11,9 @@ const CssTextField = withStyles({
       '& .MuiInputLabel-root': {
         color: '#a3a3a3',
       },
+      '& .MuiTextField-root': {
+        color: 'white',
+      },
       '& label.Mui-focused': {
         color: 'white',
       },
@@ -29,9 +32,12 @@ const CssTextField = withStyles({
         },
       },
     },
+    input: {
+      color: "white"
+    }
 })(TextField);
 
-const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPassword, errorMessages }) => (
+const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPassword, helperText, error }) => (
     
     <Grid item xs={12} sm={half ? 6 : 12}>
       <CssTextField
@@ -39,6 +45,7 @@ const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPas
         onChange={handleChange}
         variant="outlined"
         required
+        color="primary"
         fullWidth
         label={label}
         autoFocus={autoFocus}
@@ -52,6 +59,8 @@ const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPas
             </InputAdornment>
           ),
         } : null}
+        helperText={helperText}
+        error={error}
       />
     </Grid>
   );

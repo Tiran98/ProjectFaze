@@ -72,6 +72,15 @@ export default makeStyles((theme) => ({
     textfield: {
         border: '#ffffff',
     },
+    radiogroup: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: theme.spacing(1),
+    },
+    radio: {
+        display: 'flex',
+    },
     submit: {
         margin: theme.spacing(3, 0, 2),
         padding: '10px',

@@ -8,3 +8,5 @@ export { default as Checkout }
 from './CheckoutForm/Checkout/Checkout';
 export { default as UserAuth }
 from './UserAuth/UserAuth';
+export { default as Home }
+from './Home/Home';

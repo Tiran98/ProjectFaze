@@ -7,7 +7,13 @@ export const signin = (formData, history) => async(dispatch) => {
 
         dispatch({ type: AUTH, data });
 
-        history.push('/');
+        console.log(data.result.user_type);
+
+        if (data.result.user_type === "buyer") {
+            history.push('/');
+        } else {
+            history.push('/cart');
+        }
 
     } catch (error) {
         console.log(error);

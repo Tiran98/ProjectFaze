@@ -1,13 +1,39 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 
-export default () => (
-    <Carousel width="100%" autoPlay>
-        <div>
-            <img alt="" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/B9FF/production/_117751674_satan-shoes1.jpg" />
-        </div>
-        <div>
-            <img alt="" src="https://www.designyourway.net/blog/wp-content/uploads/2010/11/Nike-Print-Ads-6.jpg" />
-        </div>
-    </Carousel>
-);
+import useStyles from './styles';
+import adidas1 from '../../assets/adidas1.webp';
+import adidas2 from '../../assets/adidas2.jpg';
+import adidas3 from '../../assets/adidas3.webp';
+
+const Carousels = () => {
+    const classes = useStyles();
+
+    return (
+        <Carousel 
+            width="100%" 
+            autoPlay 
+            emulateTouch 
+            infiniteLoop
+            stopOnHover
+            interval="5000"
+            showThumbs={false}
+            showStatus={false}
+            showIndicators={false}
+            className={classes.content}
+        >
+            <div> 
+                <img alt="" src={adidas1} />
+            </div>
+            <div> 
+                <img alt="" src={adidas2} />
+            </div>
+            <div> 
+                <img alt="" src={adidas3} />
+            </div>
+        </Carousel>
+    )
+}
+
+
+export default Carousels;

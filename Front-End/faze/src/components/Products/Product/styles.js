@@ -12,9 +12,14 @@ export default makeStyles(() => ({
     cardActions: {
         display: 'flex',
         justifyContent: 'flex-end',
+        marginTop: '-10px'
     },
     cardContent: {
         display: 'flex',
         justifyContent: 'space-between',
     },
+    price: {
+        color: '#000000',
+        fontStyle: '800',
+    }
 }));

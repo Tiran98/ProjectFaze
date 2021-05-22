@@ -1,5 +1,6 @@
 module.exports = app => {
     const buyer = require("../Controllers/buyer.controller.js");
+    const buyermail = require("../Controllers/buyerMail.controller.js");
 
     //create a new Buyer
     app.post("/buyer", buyer.create);
@@ -18,4 +19,7 @@ module.exports = app => {
 
     //Delete all buyers
     app.delete("/buyer", buyer.deleteAll); 
+
+    //send mail to buyer
+    app.post("/buyer/sendMail", buyermail.sendMail);
 }

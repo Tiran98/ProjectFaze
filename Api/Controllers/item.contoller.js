@@ -62,6 +62,24 @@ exports.findOne = (req, res) => {
     });
 };
 
+//Search by Name
+exports.findName = (req, res) => {
+    Item.findByName(req.params.itemName, (err, data) => {
+        if (err) {
+            if(err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found Item with Name ${req.params.itemName}.`
+                });   
+            }
+            else{
+                res.status(500).send({
+                    message: "Error retrieving item with Name " + req.params.itemName
+                });
+            }
+        }else res.send(data);
+    });
+};
+
 // Update a Item identified by the Item_id in the request
 exports.update = (req, res) => {
     //Validate Request

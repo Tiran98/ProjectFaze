@@ -24,6 +24,7 @@ require("./Routes/seller.routes.js")(app);
 require("./Routes/item.routes.js")(app);
 require("./Routes/cartItems.routes")(app);
 require("./Routes/orderHistory.routes.js")(app);
+require("./Routes/login.routes.js")(app);
 
 //OTP Functions
 app.get('/sendOTP', (req, res) => {

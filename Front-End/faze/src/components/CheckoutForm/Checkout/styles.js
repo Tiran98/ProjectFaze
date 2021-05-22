@@ -1,8 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+import Background from '../../../assets/vi_color_all_17-01.jpg';
+
 export default makeStyles((theme) => ({
     appBar: {
         position: 'relative',
+    },
+    body: {
+        backgroundImage: `url(${Background})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
     },
     toolbar: theme.mixins.toolbar,
     layout: {

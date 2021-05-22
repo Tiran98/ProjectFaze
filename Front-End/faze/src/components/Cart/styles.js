@@ -26,4 +26,10 @@ export default makeStyles((theme) => ({
         width: '100%',
         justifyContent: 'space-between',
     },
+    subtotal: {
+        fontWeight: 600,
+    },
+    divider: {
+        marginBottom: 20,
+    },
 }));

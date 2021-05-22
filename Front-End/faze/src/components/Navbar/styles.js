@@ -35,18 +35,20 @@ export default makeStyles((theme) => ({
         flexGrow: 1,
     },
     search: {
+        flexGrow: 2,
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        backgroundColor: fade(theme.palette.common.white, 0.85),
         '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: fade(theme.palette.common.white, 1),
         },
         marginRight: theme.spacing(2),
-        marginLeft: 0,
+        marginLeft: theme.spacing(2),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
             width: 'auto',
         },
+        height: 40,
     },
     searchIcon: {
         padding: theme.spacing(0, 2),

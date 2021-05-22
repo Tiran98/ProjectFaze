@@ -6,3 +6,7 @@ export { default as Cart }
 from './Cart/Cart';
 export { default as Checkout }
 from './CheckoutForm/Checkout/Checkout';
+export { default as Seller }
+from './Seller/Seller';
+export { default as SellerDash }
+from './SellerDash/SellerDash';

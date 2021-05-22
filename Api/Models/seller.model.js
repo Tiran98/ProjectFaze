@@ -45,6 +45,24 @@ Seller.findById = (sellerId, result) => {
     });
 };
 
+Seller.findOne = (sellerEmail, result) => {
+    sql.query(`SELECT * FROM seller WHERE email = '${sellerEmail}'`, (err,res) => {
+        if(err){
+            console.log("error", err);
+            result(err, null);
+            return;
+        }
+        if(res.length){
+            console.log("found seller: ", res);
+            result(null, res);
+            return;
+        }
+         
+        //not found Seller with email
+        result({ kind: "not_found"}, null);
+    });
+};
+
 Seller.getAll = result => {
     sql.query("SELECT * FROM seller", (err, res) => {
         if (err) {

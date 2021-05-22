@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { commerce } from './lib/commerce';
+import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { Products, Navbar, Cart, Checkout, Seller, SellerDash, SellerD } from './components';
+import { ThemeProvider } from '@material-ui/styles';
+import { Products, Navbar, Cart, Checkout, UserAuth, Home, Seller, SellerDash, SellerD } from './components';
+
 
 const App = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [order, setOrder] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
+
+    const theme = createMuiTheme({
+        palette: {
+          primary: {
+            main: '#ffffff',
+          },
+          secondary: {
+            light: '#0066ff',
+            main: '#FF0000',
+            contrastText: '#ffffff',
+          },
+          contrastThreshold: 3,
+          tonalOffset: 0.2,
+        },
+      });
 
     // get all products
     const fetchProducts = async () => {
@@ -78,12 +96,18 @@ const App = () => {
 
     return (
         <Router>
-            <div>
+            <ThemeProvider theme={theme}>
                 {/* change cart item quantity */}
                 <Navbar totalItems={cart.total_items} />
                 <Switch>
                     <Route exact path="/">
                         <Products products={products} onAddToCart={handleAddToCart} />
+                    </Route>
+                    <Route exact path="/home">
+                        <Home products={products} onAddToCart={handleAddToCart} />
+                    </Route>
+                    <Route exact path="/user-auth">
+                        <UserAuth />
                     </Route>
                     <Route exact path="/cart">                
                         <Cart 
@@ -110,7 +134,7 @@ const App = () => {
                         />
                     </Route>
                 </Switch>
-            </div>
+            </ThemeProvider>
         </Router>
         
     )

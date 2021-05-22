@@ -10,3 +10,7 @@ export { default as Seller }
 from './Seller/Seller';
 export { default as SellerDash }
 from './SellerDash/SellerDash';
+export { default as UserAuth }
+from './UserAuth/UserAuth';
+export { default as Home }
+from './Home/Home';

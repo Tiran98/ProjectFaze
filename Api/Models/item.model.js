@@ -44,6 +44,25 @@ Item.findById = (itemId, result) => {
     });
 };
 
+Item.findByName = (itemName, result) => {
+    sql.query(`SELECT * FROM items WHERE item_name = '${itemName}'`, (err,res) => {
+        if(err){
+            console.log("error", err);
+            result(err, null);
+            return;
+        }
+        if(res.length){
+            console.log("found item: ", res);
+            result(null, res);
+            return;
+        }
+        
+        
+        //not found Item with name
+        result({ kind: "not_found"}, null);
+    });
+};
+
 Item.getAll = result => {
     sql.query("SELECT * FROM items", (err, res) => {
         if (err) {

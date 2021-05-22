@@ -41,5 +41,12 @@ export default makeStyles((theme) => ({
     },
     products: {
         marginTop: 10,
-    }
+    },
+    spinner: {
+        display: 'flex',
+        marginTop: theme.spacing(2),
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: 200,
+    },
 }));

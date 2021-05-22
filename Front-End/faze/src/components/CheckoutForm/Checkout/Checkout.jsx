@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { CssBaseline, Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 
+import PropTypes from 'prop-types';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Check from '@material-ui/icons/Check';
+import StepConnector from '@material-ui/core/StepConnector';
+
 import useStyles from './styles';
 import AddressForm from '../AddressForm';
 import PaymentForm from '../PaymentForm';
@@ -16,6 +22,67 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     const [isFinished, setIsFinished] = useState(false);
     const classes = useStyles();
     const history = useHistory();
+
+    const QontoConnector = withStyles({
+        alternativeLabel: {
+          top: 10,
+          left: 'calc(-50% + 16px)',
+          right: 'calc(50% + 16px)',
+        },
+        active: {
+          '& $line': {
+            borderColor: '#4a4a4a',
+          },
+        },
+        completed: {
+          '& $line': {
+            borderColor: '#4a4a4a',
+          },
+        },
+        line: {
+          borderColor: '#eaeaf0',
+          borderTopWidth: 3,
+          borderRadius: 1,
+        },
+      })(StepConnector);
+      
+      const useQontoStepIconStyles = makeStyles({
+        root: {
+          color: '#eaeaf0',
+          display: 'flex',
+          height: 22,
+          alignItems: 'center',
+        },
+        active: {
+          color: '#000000',
+        },
+        circle: {
+          width: 12,
+          height: 12,
+          borderRadius: '50%',
+          backgroundColor: 'currentColor',
+        },
+        completed: {
+          color: '#ff0000',
+          zIndex: 1,
+          fontSize: 18,
+        },
+      });
+      
+      function QontoStepIcon(props) {
+        const classes = useQontoStepIconStyles();
+        const { active, completed } = props;
+      
+        return (
+          <div
+            className={clsx(classes.root, {
+              [classes.active]: active,
+            })}
+          >
+            {completed ? <Check className={classes.completed} /> : <div className={classes.circle} />}
+          </div>
+        );
+      }
 
     const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
     const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -48,8 +115,6 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
             setIsFinished(true);
         }, 3000);
     }
-
-    console.log(isFinished);
 
     let Confirmation = () => order.customer ? (
         <>  
@@ -91,20 +156,22 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     return (
         <>
         <CssBaseline />
+           <div className={classes.body}>
            <div className={classes.toolbar} />
-           <main className={classes.layout}>
-               <Paper className={classes.paper}>
-                   <Typography variant="h4" align="center">Checkout</Typography>
-                   <Stepper activeStep={activeStep} className={classes.stepper}>
-                        {steps.map((label) => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
-                   </Stepper>
-                   {activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
-               </Paper>
-           </main>
+            <main className={classes.layout}>
+                <Paper className={classes.paper}>
+                    <Typography variant="h4" align="center">Checkout</Typography>
+                    <Stepper activeStep={activeStep} className={classes.stepper} connector={<QontoConnector />}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+                                </Step>
+                            ))}
+                    </Stepper>
+                    {activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
+                </Paper>
+            </main>
+           </div>
         </>
     )
 }

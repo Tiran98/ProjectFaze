@@ -4,8 +4,9 @@ import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography, Button 
 import { ShoppingCart } from '@material-ui/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import logo from '../../assets/fazeLogo.png';
+import logo from '../../assets/fazeLogo2.png';
 import useStyles from './styles';
+import SearchBar from "material-ui-search-bar";
 
 const Navbar = ({ totalItems }) => {
     const classes = useStyles();
@@ -42,8 +43,11 @@ const Navbar = ({ totalItems }) => {
                 <Toolbar>
                     <Typography component={Link} to="/" variant="h6" className={classes.title} color="inherit">
                         <img src={logo} alt="Commerce.js" height="25px" className={classes.image} />
-                        Faze
                     </Typography>
+                    <SearchBar
+                        className={classes.search}
+                        placeholder="Type the product name to search"
+                    />
                     <div className={classes.grow} />
                     <div>
                         {user ? (

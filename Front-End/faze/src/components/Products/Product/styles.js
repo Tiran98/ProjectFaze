@@ -20,6 +20,9 @@ export default makeStyles(() => ({
     },
     price: {
         color: '#000000',
-        fontStyle: '800',
+        fontWeight: 800,
+    },
+    seller: {
+        fontWeight: 500,
     }
 }));

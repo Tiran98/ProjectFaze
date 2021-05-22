@@ -17,7 +17,7 @@ const Product = ({ product, onAddToCart }) => {
                             <Typography variant="h6" gutterBottom>
                                 {product.name}
                             </Typography>
-                            <Typography variant="caption" gutterBottom>
+                            <Typography variant="caption" className={classes.seller} gutterBottom>
                                 By Adidas
                             </Typography>
                         </div>

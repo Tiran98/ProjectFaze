@@ -17,12 +17,12 @@ Buyer.create = (newBuyer, result) => {
     sql.query("INSERT INTO buyer SET ?", newBuyer, (err,res) => {
         if(err){
             console.log("error: ", err);
-            result(err, NULL);
+            result(err, null);
             return;
         }
 
-        console.log("created buyer: ", {is: res.insertId, ...newBuyer});
-        result(NULL, { is: res.insertId, ...newBuyer});
+        console.log("created buyer: ", {id: res.insertId, ...newBuyer});
+        result(null, { id: res.insertId, ...newBuyer});
     });
 };
 
@@ -30,18 +30,36 @@ Buyer.findById = (buyerId, result) => {
     sql.query(`SELECT * FROM buyer WHERE id = ${buyerId}`, (err,res) => {
         if(err){
             console.log("error", err);
-            result(err, NULL);
+            result(err, null);
             return;
         }
         if(res.length){
             console.log("found buyer: ", res[0]);
-            result(NULL, res[0]);
+            result(null, res[0]);
             return;
         }
         
         
         //not found Buyer with id
-        result({ kind: "not_found"}, NULL);
+        result({ kind: "not_found"}, null);
+    });
+};
+
+Buyer.findOne = (buyerEmail, result) => {
+    sql.query(`SELECT * FROM buyer WHERE email = '${buyerEmail}'`, (err,res) => {
+        if(err){
+            console.log("error", err);
+            result(err, null);
+            return;
+        }
+        if(res.length){
+            console.log("found buyer: ", res);
+            result(null, res);
+            return;
+        }
+         
+        //not found Buyer with id
+        result({ kind: "not_found"}, null);
     });
 };
 
@@ -49,7 +67,7 @@ Buyer.getAll = result => {
     sql.query("SELECT * FROM buyer", (err, res) => {
         if (err) {
             console.log("error: ", res);
-            result(NULL,err);
+            result(null,err);
             return;
         }
 
@@ -60,18 +78,18 @@ Buyer.getAll = result => {
 
 Buyer.updatedById = (id, buyer, result) => {
     sql.query(
-        "UPDATE buyer SET email = ?, name = ? WHERE id = ?",
-        [buyer.email, buyer.name, id],
+        "UPDATE buyer SET email = ?, username = ?, password = ?, age = ?, country = ?, address = ?, usertype = ?, mobile_number = ? WHERE id = ?",
+        [buyer.email, buyer.username, buyer.password, buyer.age, buyer.country, buyer.address, buyer.usertype, buyer.mobile_number, id],
         (err, res) => {
             if(err){
                 console.log("error: ", err);
-                result(NULL, err);
+                result(null, err);
                 return;
             }
 
 
             console.log("Updated Buyer: ", { id: id, ...buyer});
-            result(NULL, { id: id, ...buyer});
+            result(null, { id: id, ...buyer});
         }
     );
 };
@@ -80,18 +98,18 @@ Buyer.remove = (id, result) => {
     sql.query("DELETE FROM buyer WHERE id = ?", id, (err, res) => {
       if (err) {
         console.log("error: ", err);
-        result(NULL, err);
+        result(null, err);
         return;
       }
   
       if (res.affectedRows == 0) {
         // not found Buyer with the id
-        result({ kind: "not_found" }, NULL);
+        result({ kind: "not_found" }, null);
         return;
       }
   
       console.log("deleted buyer with id: ", id);
-      result(NULL, res);
+      result(null, res);
     });
   };
   
@@ -99,12 +117,12 @@ Buyer.remove = (id, result) => {
     sql.query("DELETE FROM buyer", (err, res) => {
       if (err) {
         console.log("error: ", err);
-        result(NULL, err);
+        result(null, err);
         return;
       }
   
       console.log(`deleted ${res.affectedRows} buyer`);
-      result(NULL, res);
+      result(null, res);
     });
   };
 

@@ -45,15 +45,16 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single Customer with a customerId
+// Find a single Buyer with a BuyerId
 exports.findOne = (req, res) => {
     Buyer.findById(req.params.buyerId, (err, data) => {
         if (err) {
             if(err.kind === "not_found") {
                 res.status(404).send({
                     message: `Not found Buyer with id ${req.params.buyerId}.`
-                });
-            } else {
+                });   
+            }
+            else{
                 res.status(500).send({
                     message: "Error retrieving Buyer with id " + req.params.buyerId
                 });
@@ -62,7 +63,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a Customer identified by the customerId in the request
+// Update a Buyer identified by the BuyerId in the request
 exports.update = (req, res) => {
     //Validate Request
     if(!req.body) {
@@ -90,7 +91,7 @@ exports.update = (req, res) => {
     );
 };
 
-// Delete a Customer with the specified customerId in the request
+// Delete a Buyer with the specified BuyerId in the request
 exports.delete = (req, res) => {
     Buyer.remove(req.params.buyerId, (err, data) => {
         if(err) {
@@ -107,7 +108,7 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Customers from the database.
+// Delete all Buyers from the database.
 exports.deleteAll = (req, res) => {
     Buyer.removeAll((err, data) => {
         if (err){

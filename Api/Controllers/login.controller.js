@@ -75,6 +75,7 @@ function signup(req, res){
 }
 
 function login(req, res){
+    console.log(req.body);
     buyer.findOne(req.body.email, (err, data) => {
         if(err){
             console.log("this buyer email");

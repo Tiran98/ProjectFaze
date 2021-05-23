@@ -2,7 +2,7 @@
     "name": "faze",
     "version": "0.1.0",
     "private": true,
-    "proxy": "http://localhost:80",
+    "proxy": "http://localhost:5000",
     "dependencies": {
         "@chec/commerce.js": "^2.4.1",
         "@fontsource/roboto": "^4.3.0",
@@ -60,3 +60,4 @@
         ]
     }
 }
+

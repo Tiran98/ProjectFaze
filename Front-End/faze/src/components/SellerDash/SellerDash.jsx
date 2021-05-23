@@ -10,15 +10,7 @@ const SellerDash = ( ) => {
   const classes = useStyles();
 
   return (
-    !sellerdash.length ? <CircularProgress /> : (
-      <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-        {sellerdash.map((post) => (
-          <Grid key={post._id} item xs={12} sm={6} md={6}>
-            <SellerD post={post} />
-          </Grid>
-        ))}
-      </Grid>
-    )
+    <div>Seller Dashboard</div>
   );
 };
 

@@ -14,11 +14,8 @@ import Container from '@material-ui/core/Container';
 import useStyles from './styles';
 import Input from './Input';
 import { signin, signup } from '../../actions/auth';
-import { Formik, Form, Field } from 'formik';
-import * as EmailValidator from "email-validator"; // used when validating with a self-implemented approach
-import * as Yup from "yup"; // used when validating with a pre-built solution
 
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '', usertype: 'buyer' };
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '', usertype: 'Buyer' };
   
 const UserAuth = () => {
     const classes = useStyles();
@@ -27,7 +24,7 @@ const UserAuth = () => {
 
     const [formData, setFormData] = useState(initialState);
     const [error, setError] = React.useState(false);
-    const [value, setValue] = React.useState('buyer');
+    const [value, setValue] = React.useState('Buyer');
     const [errorMessage, setErrorMessage] = React.useState("");
     const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -128,10 +125,10 @@ const UserAuth = () => {
                                 <Grid container justify="center" spacing={2} gutterBottom>
                                     <RadioGroup aria-label="usertype" name="usertype" row value={value} onChange={handleChange}>
                                         <Grid item xs>
-                                            <FormControlLabel value="buyer" control={<Radio color="primary" />} label="Buyer" />
+                                            <FormControlLabel value="Buyer" control={<Radio color="primary" />} label="Buyer" />
                                         </Grid>
                                         <Grid item xs>
-                                            <FormControlLabel value="seller" control={<Radio color="primary" />} label="Seller" />
+                                            <FormControlLabel value="Seller" control={<Radio color="primary" />} label="Seller" />
                                         </Grid>
                                     </RadioGroup>
                                 </Grid>

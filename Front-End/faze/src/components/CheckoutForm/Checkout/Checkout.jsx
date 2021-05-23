@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CssBaseline, Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -22,6 +23,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     const [isFinished, setIsFinished] = useState(false);
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const QontoConnector = withStyles({
         alternativeLabel: {
@@ -106,6 +108,8 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 
     const test = (data) => {
         setShippingData(data);
+
+        // dispatch(orderAdd(shippingData, history));
 
         nextStep();
     };

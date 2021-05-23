@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography, Button } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -7,6 +8,8 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import logo from '../../assets/fazeLogo2.png';
 import useStyles from './styles';
 import SearchBar from "material-ui-search-bar";
+import { getProducts } from '../../actions/products';
+import { getCart } from '../../actions/carts';
 
 const Navbar = ({ totalItems }) => {
     const classes = useStyles();
@@ -15,6 +18,7 @@ const Navbar = ({ totalItems }) => {
     const history = useHistory();
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    // const cartNew = useSelector((state) => state.carts);
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
@@ -23,6 +27,11 @@ const Navbar = ({ totalItems }) => {
     
         setUser(null);
     };
+
+    // useEffect(() => {
+    //     dispatch(getCart());
+    // }, [dispatch]);
+
     
 
     useEffect(() => {

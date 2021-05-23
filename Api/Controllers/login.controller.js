@@ -97,7 +97,8 @@ function login(req, res){
                             }, 'secret', function(err, token){
                                 res.status(200).json({
                                     message: "Authentication Successfull!",
-                                    token: token
+                                    token: token,
+                                    data: sdata
                                 })
                             });
                         }else{
@@ -122,7 +123,8 @@ function login(req, res){
                     }, 'secret', function(err, token){
                         res.status(200).json({
                             message: "Authentication Successfull!",
-                            token: token
+                            token: token,
+                            data:data
                         })
                     });
                 }else{

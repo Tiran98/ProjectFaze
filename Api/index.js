@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+var cors = require('cors');
 
 var dbConfig = require("./config/db.config.js")
 const client = require("twilio")(dbConfig.accountSID,dbConfig.authToken)
@@ -8,6 +9,7 @@ const client = require("twilio")(dbConfig.accountSID,dbConfig.authToken)
 const database = require('../Api/Models/db');
 
 const app = express();
+app.use(cors())
 
 database.connect(function(err) {
     if (err) {

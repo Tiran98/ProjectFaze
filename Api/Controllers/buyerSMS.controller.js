@@ -1,12 +1,12 @@
 const Buyer = require("../Models/buyer.model.js");
 //var dbConfig = require("./config/db.config.js")
-const client = require("twilio")('AC46e8034ecd71c96315f0e92d8890682d','c4ab0857a47166d12703acfa391a7680')
+const client = require("twilio")('AC46e8034ecd71c96315f0e92d8890682d','ac36f720ed59243c9cab8c35e7bfa75d')
 
 function sendTextMessage(req, res){
     Buyer.findById(req.body.buyerId, (err,data) => {
         if(data){
             client.messages.create({
-                body:"Hello From Faze, Your order has been delivered",
+                body:"Hay" +" " + `${data.username}` + " " + "Your order has been confirmed. You will recieve your order within 2 - 3 working days",
                 to:`${data.mobile_number}`,
                 from:'+17816615707'
             }).then(message => console.log(message))

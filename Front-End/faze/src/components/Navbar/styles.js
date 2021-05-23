@@ -4,7 +4,8 @@ const drawerWidth = 0;
 
 export default makeStyles((theme) => ({
     appBar: {
-        boxShadow: 'none',
+        backgroundColor: '#000000',
+        boxShadow: '0 5px 3px -3px rgba(0, 0, 0, 0.40)',
         borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
         [theme.breakpoints.up('sm')]: {
             width: `calc(100% - ${drawerWidth}px)`,
@@ -15,10 +16,14 @@ export default makeStyles((theme) => ({
         flexGrow: 1,
         alignItems: 'center',
         display: 'flex',
+        color: 'white',
         textDecoration: 'none',
     },
     image: {
         marginRight: '10px',
+    },
+    button: {
+        marginLeft: '10px',
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -30,18 +35,20 @@ export default makeStyles((theme) => ({
         flexGrow: 1,
     },
     search: {
+        flexGrow: 2,
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        backgroundColor: fade(theme.palette.common.white, 0.85),
         '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: fade(theme.palette.common.white, 1),
         },
         marginRight: theme.spacing(2),
-        marginLeft: 0,
+        marginLeft: theme.spacing(2),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
             width: 'auto',
         },
+        height: 40,
     },
     searchIcon: {
         padding: theme.spacing(0, 2),
@@ -64,5 +71,24 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             width: '20ch',
         },
+    },
+    profile: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+            width: 'auto',
+            marginTop: 20,
+            justifyContent: 'center',
+        },
+    },
+    logout: {
+        marginLeft: '20px',
+    },
+    userName: {
+        display: 'flex',
+        alignItems: 'center',
+        textAlign: 'center',
+        fontSize: '12pt',
     },
 }));

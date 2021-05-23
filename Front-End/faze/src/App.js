@@ -2,16 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { commerce } from './lib/commerce';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { ThemeProvider } from '@material-ui/styles';
 import { Products, Navbar, Cart, Checkout, UserAuth, Home, Seller, SellerDash, SellerD } from './components';
+import { getProducts } from './actions/products';
+import { getCart } from './actions/carts';
 
 
 const App = () => {
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [order, setOrder] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
+    const dispatch = useDispatch();
+
+    const productsNew = useSelector((state) => state.products);
+    // const cartNew = useSelector((state) => state.carts);
+
+    // console.log(cartNew);
 
     const theme = createMuiTheme({
         palette: {
@@ -29,17 +39,23 @@ const App = () => {
         spacing: 8,
     });
 
-    // get all products
-    const fetchProducts = async() => {
-        const { data } = await commerce.products.list();
+    useEffect(() => {
+        dispatch(getProducts());
+    }, [dispatch]);
 
-        setProducts(data);
-    };
+    
+    // const fetchProducts = async() => {
+    //     const { data } = await commerce.products.list();
+
+    //     setProducts(data);
+    // };
 
     // get cart items
     const fetchCart = async() => {
         setCart(await commerce.cart.retrieve());
     };
+
+    // console.log(JSON.stringify(cart));
 
     // add items to cart
     const handleAddToCart = async(productId, quantity) => {
@@ -89,11 +105,9 @@ const App = () => {
     }
 
     useEffect(() => {
-        fetchProducts();
         fetchCart();
+        // fetchProducts();
     }, []);
-
-    console.log(cart);
 
     return (
         <Router>
@@ -102,10 +116,10 @@ const App = () => {
                 <Navbar totalItems={cart.total_items} />
                 <Switch>
                     <Route exact path="/">
-                        <Products products={products} onAddToCart={handleAddToCart} />
+                        <Products products={productsNew} onAddToCart={handleAddToCart} />
                     </Route>
                     <Route exact path="/home">
-                        <Home products={products} onAddToCart={handleAddToCart} />
+                        <Home products={productsNew} onAddToCart={handleAddToCart} />
                     </Route>
                     <Route exact path="/user-auth">
                         <UserAuth />

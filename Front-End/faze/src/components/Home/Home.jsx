@@ -11,6 +11,10 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 const Home = ({ products, onAddToCart }) => {
     const classes = useStyles();
 
+    console.log(products);
+
+    // const productsData = JSON.parse(products);
+   
     return (
         <main className={classes.content}>
             <div className={classes.toolbar} />

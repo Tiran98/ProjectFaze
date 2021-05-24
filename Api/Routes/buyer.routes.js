@@ -2,6 +2,7 @@ module.exports = app => {
     const buyer = require("../Controllers/buyer.controller.js");
     const buyermail = require("../Controllers/buyerMail.controller.js");
     const buyermsg = require("../Controllers/buyerSMS.controller.js");
+    const delivery = require("../Controllers/delivery.controller.js");
 
     //create a new Buyer
     app.post("/buyer", buyer.create);
@@ -26,4 +27,7 @@ module.exports = app => {
 
     //send sms to buyer
     app.post("/buyer/sendMsg", buyermsg.sendTextMessage);
+
+    //get lable from delivery service
+    app.post("/delivery", delivery.sendDelivery);
 }

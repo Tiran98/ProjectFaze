@@ -4,14 +4,12 @@ const sql = require("./db.js");
 //constructor
 const CartItems = function(cartitem){
     this.buyer_id = cartitem.buyer_id;
-    this.cart_id = cartitem.cart_id;
     this.item_id = cartitem.item_id;
     this.item_name = cartitem.item_name;
     this.item_qty = cartitem.item_qty;
     this.item_category = cartitem.item_category;
     this.unit_price = cartitem.unit_price;
     this.total_price = cartitem.total_price;
-    this.total_items = cartitem.total_items;
 };
 
 CartItems.create = (newCartItem, result) => {

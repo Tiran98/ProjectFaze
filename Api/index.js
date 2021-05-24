@@ -2,10 +2,10 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 var cors = require('cors');
+var mysql = require('mysql');
 
 var dbConfig = require("./config/db.config.js")
 const client = require("twilio")(dbConfig.accountSID,dbConfig.authToken)
-
 const database = require('../Api/Models/db');
 
 const app = express();
@@ -36,8 +36,8 @@ app.get('/sendOTP', (req, res) => {
         .verifications
         .create({
             //from: '+94712427978',
-            to: `+${req.query.phonenumber}`,
-            channel: req.query.channel
+            to: `+${req.body.phonenumber}`,
+            channel: "sms"
         })
         .then((data) => {
             res.status(200).send(data)
@@ -50,13 +50,23 @@ app.get('/verifyOTP', (req, res) => {
         .services(dbConfig.serviceID)
         .verificationChecks
         .create({
-            to: `+${req.query.phonenumber}`,
-            code: req.query.code
+            to: `+${req.body.phonenumber}`,
+            code: req.body.code
         })
         .then((data) => {
             res.status(200).send(data)
         })
 });
+
+app.get("/emailCart", (req, res)=>{
+    database.query("SELECT * FROM cart_items", (err, response) => {
+            if (err) {
+                res.send(err)
+            }
+            console.log(response)
+            res.send(response)
+        });
+})
 
 const PORT = process.env.PORT || 5000;
 

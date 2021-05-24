@@ -96,7 +96,7 @@ function login(req, res){
                                 userId:sdata[0].id
                             }, 'secret', function(err, token){
                                 res.status(200).json({
-                                    message: "Authentication Successfull!",
+                                    message: "Authentication Successfull...!",
                                     token: token,
                                     data: sdata
                                 })
@@ -122,7 +122,7 @@ function login(req, res){
                         userId:data[0].id
                     }, 'secret', function(err, token){
                         res.status(200).json({
-                            message: "Authentication Successfull!",
+                            message: "Authentication Successfull...!",
                             token: token,
                             data:data
                         })

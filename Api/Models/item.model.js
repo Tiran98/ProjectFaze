@@ -66,12 +66,12 @@ Item.findByName = (itemName, result) => {
 Item.getAll = result => {
     sql.query("SELECT * FROM items", (err, res) => {
         if (err) {
-            console.log("error: ", res);
+            console.log("error: ", err);
             result(null,err);
             return;
         }
 
-        console.log("error: ", res);
+        console.log("data: ", res);
         result(null, res);
     });
 };

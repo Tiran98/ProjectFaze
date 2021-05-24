@@ -8,17 +8,16 @@ exports.create = (req, res) => {
             message: "content can not be empty!"
         });
     }
+    console.log(req.body.cart_items[0].product.item_name);
     //create buyer
     const cartItems = new CartItems({
-        buyer_id: req.body.buyer_id,
-        cart_id:req.body.cart_id,
-        item_id:req.body.item_id,
-        item_name:req.body.item_name,
-        item_qty:req.body.item_qty,
-        item_category:req.body.item_category,
-        unit_price:req.body.unit_price,
-        total_price:req.body.total_price,
-        total_items:req.body.total_items         
+        buyer_id: req.body.customer.id,
+        item_id:req.body.cart_items[0].product.id,
+        item_name:req.body.cart_items[0].product.item_name,
+        item_qty:req.body.cart_items[0].quantity,
+        item_category:req.body.cart_items[0].product.item_category,
+        unit_price:req.body.cart_items[0].product.unit_price,
+        total_price:req.body.cart_items[0].subtotal        
     });
     //save buyer in database
     CartItems.create(cartItems, (err, data) => {

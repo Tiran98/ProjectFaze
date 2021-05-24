@@ -1,14 +1,16 @@
 "use strict";
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 const buyer = require('../Models/buyer.model.js');
 const cartItem = require('../Models/cartItems.model');
 const orderHistory = require('../Models/orderHistory.model.js');
 const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
+const sql = require("../Models/db.js");
+const CartItems = require("../Models/cartItems.model.js");
 
 async function sendMail(req, res){
-    const filePath = path.join(__dirname, '../src/buyerEmail.html');
+    const filePath = path.join(__dirname, '../src/email.html');
     const source = fs.readFileSync(filePath, 'utf-8').toString();
     const template = handlebars.compile(source);
     const replacements = {
@@ -56,6 +58,11 @@ async function sendMail(req, res){
     
 }
 
+function loaditems(){
+    //FUNCTION
+}
+
 module.exports = {
-    sendMail: sendMail
+    sendMail: sendMail,
+    loaditems:loaditems
 }

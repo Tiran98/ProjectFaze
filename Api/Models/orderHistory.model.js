@@ -5,11 +5,18 @@ const OrderHistory = function(orderHistory){
     this.buyer_id = orderHistory.buyer_id;
     this.seller_id = orderHistory.seller_id;
     this.item_id = orderHistory.item_id;
+    this.buyer_firstName =orderHistory.buyer_firstName;
+    this.buyer_lastName = orderHistory.buyer_lastName;
+    this.country = orderHistory.country;
     this.item_name = orderHistory.item_id;
     this.item_qty = orderHistory.item_qty;
     this.item_category = orderHistory.item_category;
     this.unit_price = orderHistory.unit_price;
     this.total_price = orderHistory.total_price;
+    this.final_cost = orderHistory.final_cost;
+    this.total_items = orderHistory.total_items;
+    this.payment_method = orderHistory.payment_method;
+    this.order_ref = orderHistory.order_ref;
 };
 
 OrderHistory.create = (neworderHistory, result) => {

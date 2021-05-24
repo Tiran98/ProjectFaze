@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Divider, Grid, Paper, Typography, CircularProgress } from '@material-ui/core';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import { useDispatch } from 'react-redux';
 
 import Product from '../Products/Product/Product';
 import Footer from '../Footer/Footer';
@@ -8,10 +9,11 @@ import Carousel from './Carousel';
 import useStyles from './styles';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+import { addToCart } from '../../actions/carts';
+
 const Home = ({ products, onAddToCart }) => {
     const classes = useStyles();
-
-    console.log(products);
+    const dispatch = useDispatch();
 
     // const productsData = JSON.parse(products);
    

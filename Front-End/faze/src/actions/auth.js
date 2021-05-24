@@ -7,12 +7,12 @@ export const signin = (formData, history) => async(dispatch) => {
 
         dispatch({ type: AUTH, data });
 
-        console.log(data.result.user_type);
+        console.log(data.data.usertype);
 
-        if (data.result.user_type === "buyer") {
-            history.push('/');
+        if (data.data.usertype === "Buyer") {
+            history.push('/home');
         } else {
-            history.push('/cart');
+            history.push('/sellerDash');
         }
 
     } catch (error) {
@@ -26,7 +26,7 @@ export const signup = (formData, history) => async(dispatch) => {
 
         dispatch({ type: AUTH, data });
 
-        history.push('/');
+        history.push('/home');
 
     } catch (error) {
         console.log(error);

@@ -10,25 +10,25 @@ const Product = ({ product, onAddToCart }) => {
     return (
         <div>
             <Card className={classes.root}>
-                <CardMedia className={classes.media} image={product.media.source} title={product.name} />
+                <CardMedia className={classes.media} image={product.item_image} title={product.item_name} />
                 <CardContent>
                     <div className={classes.cardContent}>
                         <div>
                             <Typography variant="h6" gutterBottom>
-                                {product.name}
+                                {product.item_name}
                             </Typography>
-                            <Typography variant="caption" className={classes.seller} gutterBottom>
+                            <Typography variant="caption" className={classes.seller_id} gutterBottom>
                                 By Adidas
                             </Typography>
                         </div>
                         <Typography variant="h5" className={classes.price}>
-                            {product.price.formatted_with_symbol}
+                            {product.unit_price} $
                         </Typography>
                     </div>
-                    {/* <Typography dangerouslySetInnerHTML={{ __html: product.description }} variant="body2" color="textSecondary" /> */}
+                    <Typography dangerouslySetInnerHTML={{ __html: product.item_description }} variant="body2" color="textSecondary" />
                 </CardContent>
                 <CardActions disableSpacing className={classes.cardActions}>
-                    <IconButton aria-label="Add to Cart" onClick={() => onAddToCart(product.id, 1)}>
+                    <IconButton aria-label="Add to Cart" onClick={() => onAddToCart({product:product, quantity: 1, subtotal: 1 * product.unit_price})}>
                         <AddShoppingCart />
                     </IconButton>
                 </CardActions>

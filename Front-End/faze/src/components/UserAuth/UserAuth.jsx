@@ -15,7 +15,7 @@ import useStyles from './styles';
 import Input from './Input';
 import { signin, signup } from '../../actions/auth';
 
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '', usertype: 'Buyer' };
+const initialState = { username: '', email: '', password: '', confirmPassword: '', age: '', usertype: 'Buyer', mobile_number: '' };
   
 const UserAuth = () => {
     const classes = useStyles();
@@ -100,12 +100,10 @@ const UserAuth = () => {
                     { isSignup && (
                     <>
                         <Input
-                            name="firstName"
-                            label="First Name"
-                            handleChange={handleChange} 
-                            half           
+                            name="username"
+                            label="Full Name"
+                            handleChange={handleChange}            
                         />
-                        <Input name="lastName" label="Last Name" handleChange={handleChange} half />
                     </>
                     )}
                         <Input name="email" label="Email Address" type="email" handleChange={handleChange} />
@@ -116,7 +114,7 @@ const UserAuth = () => {
                         { isSignup && 
                             <>
                                 <Input name="age" label="Age" handleChange={handleChange} half />
-                                <Input name="mobile" label="Mobile Number" handleChange={handleChange} half />
+                                <Input name="mobile_numbe" label="Mobile Number" handleChange={handleChange} half />
                             </>
                         }
                         { isSignup && 

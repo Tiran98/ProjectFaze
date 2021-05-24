@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Button, Divider } from '@material-ui/core';
+import { Typography, Button, Divider, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -7,7 +7,15 @@ import Review from './Review';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep, timeout }) => {
+const PaymentForm = ({ cart, shippingData, backStep, onCaptureCheckout, nextStep, timeout, totalSub }) => {
+
+    const [value, setValue] = React.useState('');
+
+    const handleRadioChange = (event) => {
+        setValue(event.target.value);
+        console.log(value);
+      };
+
     const handleSubmit = async (event, elements, stripe) => {
         event.preventDefault();
 
@@ -23,7 +31,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
             console.log(error + 'cardError');
         } else {
             const orderData = {
-                line_items: checkoutToken.live.line_items,
+                // line_items: checkoutToken.live.line_items,
                 customer: { firstname: shippingData.firstName, lastname: shippingData.lastName, 
                     email: shippingData.email },
                 shipping: { name: 'Primary Shipping', street: shippingData.address1, 
@@ -52,7 +60,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
                 },
             };*/}
 
-            onCaptureCheckout(checkoutToken.id, orderData);
+            // onCaptureCheckout(checkoutToken.id, orderData);
 
             // timeout();
 
@@ -62,9 +70,13 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
 
     return (
         <>
-            <Review checkoutToken={checkoutToken} shippingData={shippingData} />
+            <Review cart={cart} shippingData={shippingData} totalSub={totalSub} />
             <Divider />
-            <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>Payment method</Typography>
+            <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>Payment Method</Typography>
+            <RadioGroup aria-label="payment-method" name="payment-method" value={value} onChange={handleRadioChange}>
+                <FormControlLabel value="card-payment" control={<Radio />} label="Card Payment" />
+                <FormControlLabel value="mobile-payment" control={<Radio />} label="Add to your mobile bill" />
+            </RadioGroup>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>
                     {({ elements, stripe }) => (
@@ -74,7 +86,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Button variant="outlined" onClick={backStep}>Back</Button>
                                 <Button type="submit" variant="contained" disabled={!stripe} color="primary">
-                                    Pay {checkoutToken.live.subtotal.formatted_with_symbol}
+                                    Pay {totalSub} $
                                 </Button>
                             </div>
                         </form>
@@ -85,4 +97,4 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
     )
 }
 
-export default PaymentForm
+export default PaymentForm;

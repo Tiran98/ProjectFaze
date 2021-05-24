@@ -22,8 +22,8 @@ API.interceptors.request.use((req) => {
 export const signIn = (formData) => API.post(url + '/login', formData);
 export const signUp = (formData) => API.post(url + '/sign-up', formData);
 
-export const orderAdd = (formData) => API.post('/order/signin.json', formData);
 export const fetchProducts = () => API.get(url + '/item');
 export const createProduct = (newProduct) => API.post(url + '/item', newProduct);
 
 export const fetchCart = () => API.get(url + '/cartItems');
+// export const addToCart = (productId, quantity) => API.post(url + '/cartItems', productId, quantity);

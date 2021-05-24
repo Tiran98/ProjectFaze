@@ -20,6 +20,9 @@ const Navbar = ({ totalItems }) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     // const cartNew = useSelector((state) => state.carts);
 
+    // console.log("total item" + totalItems);
+    // console.log(user.toekn);
+    
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
     
@@ -50,8 +53,8 @@ const Navbar = ({ totalItems }) => {
         <div>
             <AppBar position="fixed" className={classes.appBar} color="inherit">
                 <Toolbar>
-                    <Typography component={Link} to="/" variant="h6" className={classes.title} color="inherit">
-                        <img src={logo} alt="Commerce.js" height="25px" className={classes.image} />
+                    <Typography component={Link} to="/home" variant="h6" className={classes.title} color="inherit">
+                        <img src={logo} alt="Faze" height="25px" className={classes.image} />
                     </Typography>
                     <SearchBar
                         className={classes.search}
@@ -61,7 +64,7 @@ const Navbar = ({ totalItems }) => {
                     <div>
                         {user ? (
                             <div className={classes.profile}>
-                                <Typography className={classes.userName} variant="h6" color="primary">{user?.result.name}</Typography>
+                                <Typography className={classes.userName} variant="h6" color="primary">{user?.data.username}</Typography>
                                 <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
                             </div>
                         ) : (

@@ -10,5 +10,4 @@ export const reducers = combineReducers({
     auth,
     order,
     products,
-    carts,
 });

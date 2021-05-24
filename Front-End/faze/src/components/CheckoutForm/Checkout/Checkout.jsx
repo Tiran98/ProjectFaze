@@ -16,7 +16,7 @@ import { commerce } from '../../../lib/commerce';
 
 const steps = ['Shipping address', 'Payment details'];
 
-const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
+const Checkout = ({ cart, order, onCaptureCheckout, error, totalSub }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState(null);
     const [shippingData, setShippingData] = useState({});
@@ -93,7 +93,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
         if (cart.id) {
           const generateToken = async () => {
             try {
-              const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
+              const token = "38UYDH3HDWJDW98HD"
 
               setCheckoutToken(token);
             } catch (error) {
@@ -110,6 +110,8 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
         setShippingData(data);
 
         // dispatch(orderAdd(shippingData, history));
+        
+        console.log(shippingData);
 
         nextStep();
     };
@@ -154,8 +156,16 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     }
 
     const Form = () => (activeStep === 0
-        ? <AddressForm checkoutToken={checkoutToken} nextStep={nextStep} setShippingData={setShippingData} test={test} />
-        : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} nextStep={nextStep} backStep={backStep} onCaptureCheckout={onCaptureCheckout} timeout={timeout} />);
+        ? <AddressForm  nextStep={nextStep} setShippingData={setShippingData} test={test} />
+        : <PaymentForm 
+            shippingData={shippingData}  
+            nextStep={nextStep} 
+            backStep={backStep} 
+            onCaptureCheckout={onCaptureCheckout} 
+            timeout={timeout} 
+            cart={cart}
+            totalSub={totalSub}
+          />);
 
     return (
         <>
@@ -172,7 +182,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
                                 </Step>
                             ))}
                     </Stepper>
-                    {activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
+                    {activeStep === steps.length ? <Confirmation /> : true && <Form />}
                 </Paper>
             </main>
            </div>

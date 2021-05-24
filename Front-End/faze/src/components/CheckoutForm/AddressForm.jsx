@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import FormInput from './CustomTextField';
 import { commerce } from '../../lib/commerce';
 
-const AddressForm = ({ checkoutToken,  test }) => {
+const AddressForm = ({ test }) => {
     const [shippingCountries, setShippingCountries] = useState([]);
     const [shippingCountry, setShippingCountry] = useState('');
     const [shippingOptions, setShippingOptions] = useState([]);
@@ -17,7 +17,7 @@ const AddressForm = ({ checkoutToken,  test }) => {
 
     const countries = shippingCountries.map((sO) => ({ id: sO.value, label: sO.label }));
 
-    const fetchShippingCountries = async (checkoutTokenId) => {
+    const fetchShippingCountries = async () => {
 
         const shippingCountries = [
             { label: "USA", value: "USA"},
@@ -58,7 +58,6 @@ const AddressForm = ({ checkoutToken,  test }) => {
            <FormProvider {...methods}>
            <form onSubmit={methods.handleSubmit((data) => test({ ...data, shippingCountry, shippingOption }))}>
                     <Grid container spacing={3} gutterBottom>
-                        {/* <FormInput {...register("test")} label='Test' name='test'/> */}
                         <FormInput name='firstName' label='First Name'/>
                         <FormInput name='lastName' label='Last Name' />
                         <FormInput name='address1' label='Address' />

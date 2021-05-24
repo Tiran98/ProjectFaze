@@ -10,10 +10,12 @@ import { Products, Navbar, Cart, Checkout, UserAuth, Home, Seller, SellerDash, S
 import { getProducts } from './actions/products';
 import { getCart } from './actions/carts';
 
+var totalSub;
 
 const App = () => {
-    // const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
+   
     const [order, setOrder] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
     const dispatch = useDispatch();
@@ -43,53 +45,77 @@ const App = () => {
         dispatch(getProducts());
     }, [dispatch]);
 
-    
-    // const fetchProducts = async() => {
-    //     const { data } = await commerce.products.list();
-
-    //     setProducts(data);
-    // };
-
     // get cart items
     const fetchCart = async() => {
-        setCart(await commerce.cart.retrieve());
+        // setCart(await commerce.cart.retrieve());
     };
 
-    // console.log(JSON.stringify(cart));
+    var array = [];
+    var arrayLength = 0;
 
     // add items to cart
-    const handleAddToCart = async(productId, quantity) => {
-        const response = await commerce.cart.add(productId, quantity);
+    const handleAddToCart = async({product : product, quantity : quantity, subtotal : subtotal}) => {
 
-        setCart(response.cart);
+        // console.log(productId, quantity);
+        
+        cart.push({product : product, quantity : quantity, subtotal : subtotal })
+
+        console.log(cart);
+       
     };
+
+    useEffect(() => {
+        setCart(cart);
+        totalSub = cart.reduce((total, currentValue) => total = total + currentValue.subtotal,0);
+    }, []);
+
+    
 
     // update cart item quantity
     const handleUpdateCartQty = async(productId, quantity) => {
-        const response = await commerce.cart.update(productId, { quantity });
 
-        setCart(response.cart);
+        var arr3 = Object.values(cart);
+
+        let item = arr3.find((item) => item.product.id == productId);
+
+        let newCart = arr3.filter((item) => item.product.id != productId);
+
+        item.quantity = quantity;
+        item.subtotal = item.product.unit_price * quantity;
+    
+        newCart.push(item);
+
+        setCart(newCart);
+        totalSub = cart.reduce((total, currentValue) => total = total + currentValue.subtotal,0);
+        console.log(totalSub);
+
     };
 
+    
     // remove cart items
     const handleRemoveFromCart = async(productId) => {
-        const response = await commerce.cart.remove(productId);
 
-        setCart(response.cart);
+        var arr3 = Object.values(cart);
+        
+        arr3 = arr3.filter((item) => item.product.id !== productId);
+        console.log(arr3);
+
+        setCart(arr3);
+        totalSub = cart.reduce((total, currentValue) => total = total + currentValue.subtotal,0);
     };
+
 
     // empty the cart
     const handleEmptyCart = async() => {
-        const response = await commerce.cart.empty();
-
-        setCart(response.cart);
+        setCart([]);
+        
     };
 
     //refresh the cart
     const refreshCart = async() => {
-        const newCart = await commerce.cart.refresh();
+        // const newCart = await commerce.cart.refresh();
 
-        setCart(newCart);
+        // setCart(newCart);
     };
 
     const handleCaptureCheckout = async(checkoutTokenId, newOrder) => {
@@ -104,16 +130,12 @@ const App = () => {
         }
     }
 
-    useEffect(() => {
-        fetchCart();
-        // fetchProducts();
-    }, []);
 
     return (
         <Router>
             <ThemeProvider theme={theme}>
                 {/* change cart item quantity */}
-                <Navbar totalItems={cart.total_items} />
+                <Navbar totalItems={ cart.length } />
                 <Switch>
                     <Route exact path="/">
                         <Products products={productsNew} onAddToCart={handleAddToCart} />
@@ -127,6 +149,7 @@ const App = () => {
                     <Route exact path="/cart">                
                         <Cart 
                             cart={cart}
+                            totalSub={totalSub}
                             handleUpdateCartQty={handleUpdateCartQty}
                             handleRemoveFromCart={handleRemoveFromCart}
                             handleEmptyCart={handleEmptyCart}
@@ -135,7 +158,8 @@ const App = () => {
                     <Route exact path="/checkout">
                         <Checkout 
                             cart={cart}
-                            order={order} 
+                            order={order}
+                            totalSub={totalSub}
                             onCaptureCheckout={handleCaptureCheckout} 
                             error={errorMessage}
                         />

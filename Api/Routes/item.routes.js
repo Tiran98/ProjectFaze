@@ -11,7 +11,7 @@ module.exports = app => {
     app.get("/item/:itemId", item.findOne);
 
     //Search a Items with Item Name
-    app.get("/item/find/:itemName", item.findName);
+    app.get("/itemfind", item.findName);
 
     //Update a Item with ItemId
     app.put("/item/:itemId", item.update);

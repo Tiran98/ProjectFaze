@@ -3,7 +3,6 @@ import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
 
 const Review = ({ cart, shippingData, totalSub }) => {
 
-    console.log(cart);
 
     return (
         <>

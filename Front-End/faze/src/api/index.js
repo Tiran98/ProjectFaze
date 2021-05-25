@@ -25,5 +25,4 @@ export const signUp = (formData) => API.post(url + '/sign-up', formData);
 export const fetchProducts = () => API.get(url + '/item');
 export const createProduct = (newProduct) => API.post(url + '/item', newProduct);
 
-export const fetchCart = () => API.get(url + '/cartItems');
-// export const addToCart = (productId, quantity) => API.post(url + '/cartItems', productId, quantity);
+// export const sendOTP = () => API.post(url + '/sendOTP');

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography, Button } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { ShoppingCart } from '@material-ui/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
@@ -11,43 +12,40 @@ import SearchBar from "material-ui-search-bar";
 import { getProducts } from '../../actions/products';
 import { getCart } from '../../actions/carts';
 
-const Navbar = ({ totalItems }) => {
+const Navbar = ({ totalItems, setSearchKey, searchKey, searchProduct, resetSearch, isAvailable }) => {
     const classes = useStyles();
     const location = useLocation();
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-    // const cartNew = useSelector((state) => state.carts);
 
-    // console.log("total item" + totalItems);
-    // console.log(user.toekn);
-    
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
     
-        history.push('/');
+        history.push('/home');
     
         setUser(null);
     };
 
-    // useEffect(() => {
-    //     dispatch(getCart());
-    // }, [dispatch]);
+    const handleSearch = () => {
+        console.log(searchKey);
+        setSearchKey(searchKey);
 
-    
+        searchProduct();
+
+    };
+
+    // console.log(searchKey);
 
     useEffect(() => {
         const token = user?.token;
     
-        // if (token) {
-        //   const decodedToken = decode(token);
-    
-        //   if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-        // }
-    
         setUser(JSON.parse(localStorage.getItem('profile')));
+        // setSearchKey(searchKey);
       }, [location]);
+
+
 
     return (
         <div>
@@ -59,6 +57,10 @@ const Navbar = ({ totalItems }) => {
                     <SearchBar
                         className={classes.search}
                         placeholder="Type the product name to search"
+                        value={searchKey}
+                        onChange={ (newValue) => setSearchKey(newValue) }
+                        onRequestSearch={handleSearch}
+                        onCancelSearch={resetSearch}
                     />
                     <div className={classes.grow} />
                     <div>

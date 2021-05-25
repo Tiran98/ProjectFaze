@@ -56,4 +56,7 @@ export default makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    mobile: {
+        color: '#000000',
+    },
 }));

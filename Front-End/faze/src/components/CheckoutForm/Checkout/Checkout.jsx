@@ -3,7 +3,6 @@ import { CssBaseline, Paper, Stepper, Step, StepLabel, Typography, CircularProgr
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Check from '@material-ui/icons/Check';
@@ -16,7 +15,7 @@ import { commerce } from '../../../lib/commerce';
 
 const steps = ['Shipping address', 'Payment details'];
 
-const Checkout = ({ cart, order, onCaptureCheckout, error, totalSub }) => {
+const Checkout = ({ cart, order, error, totalSub, handleEmptyCart, setOrder }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState(null);
     const [shippingData, setShippingData] = useState({});
@@ -88,30 +87,12 @@ const Checkout = ({ cart, order, onCaptureCheckout, error, totalSub }) => {
 
     const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
     const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
-
-    useEffect(() => {
-        if (cart.id) {
-          const generateToken = async () => {
-            try {
-              const token = "38UYDH3HDWJDW98HD"
-
-              setCheckoutToken(token);
-            } catch (error) {
-                if (activeStep !== steps.length) history.push('/');
-            }
-          };
-    
-          generateToken();
-        }
-    }, [cart]);
     
 
     const test = (data) => {
         setShippingData(data);
 
         // dispatch(orderAdd(shippingData, history));
-        
-        console.log(shippingData);
 
         nextStep();
     };
@@ -122,15 +103,17 @@ const Checkout = ({ cart, order, onCaptureCheckout, error, totalSub }) => {
         }, 3000);
     }
 
-    let Confirmation = () => order.customer ? (
+    console.log(order);
+
+    let Confirmation = () => true ? (
         <>  
             <div>
-                <Typography variant="h5">Thank you for your purchase, {order.customer.firstname} {order.customer.lastname}!</Typography>
+                <Typography variant="h5">Thank you for your purchase, {order.buyer_firstName} {order.buyer_lastName}!</Typography>
                 <Divider className={classes.divider} />
-                <Typography variant="subtitle2">Order ref: {order.customer_reference}</Typography>
+                <Typography variant="subtitle2">Order ref: {order.order_ref}</Typography>
             </div>
             <br />
-            <Button component={Link} variant="outlined" type="button" to="/">Back to home</Button>
+            <Button component={Link} variant="outlined" type="button" to="/home">Back to home</Button>
         </>
     ) : isFinished ? (
         <>  
@@ -139,7 +122,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error, totalSub }) => {
                 <Divider className={classes.divider} />
             </div>
             <br />
-            <Button component={Link} variant="outlined" type="button" to="/">Back to home</Button>
+            <Button component={Link} variant="outlined" type="button" to="/home">Back to home</Button>
         </>
     ) : (
         <div className={classes.spinner}>
@@ -151,7 +134,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error, totalSub }) => {
         <>
             <Typography variant="h5">Error: {error}</Typography>
             <br />
-            <Button component={Link} variant="outlined" type="button" to="/">Back to home</Button>  
+            <Button component={Link} variant="outlined" type="button" to="/home">Back to home</Button>  
         </>
     }
 
@@ -161,11 +144,13 @@ const Checkout = ({ cart, order, onCaptureCheckout, error, totalSub }) => {
             shippingData={shippingData}  
             nextStep={nextStep} 
             backStep={backStep} 
-            onCaptureCheckout={onCaptureCheckout} 
-            timeout={timeout} 
+            timeout={timeout}
             cart={cart}
+            setOrder={setOrder}
             totalSub={totalSub}
-          />);
+            handleEmptyCart={handleEmptyCart}
+          />     
+    );
 
     return (
         <>
